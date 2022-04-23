@@ -1,6 +1,10 @@
 package config
 
-import "github.com/spf13/viper"
+import (
+	"fmt"
+	"github.com/spf13/viper"
+	"os"
+)
 
 type Config struct {
 	Port          string `mapstructure:"PORT"`
@@ -10,8 +14,11 @@ type Config struct {
 }
 
 func LoadConfig() (c Config, err error) {
-	viper.AddConfigPath("./pkg/config/envs")
-	viper.SetConfigName("dev")
+	path, _ := os.Getwd()
+	fmt.Println(path)
+
+	viper.AddConfigPath("../pkg/config")
+	viper.SetConfigName(".env")
 	viper.SetConfigType("env")
 
 	viper.AutomaticEnv()

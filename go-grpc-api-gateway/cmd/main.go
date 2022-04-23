@@ -6,20 +6,15 @@ import (
 	"github.com/karakaya/go-grpc-project/go-grpc-api-gateway/pkg/config"
 	"github.com/karakaya/go-grpc-project/go-grpc-api-gateway/pkg/order"
 	"github.com/karakaya/go-grpc-project/go-grpc-api-gateway/pkg/product"
+	"log"
 )
 
 func main() {
-	//c, err := config.LoadConfig()
-	//if err != nil {
-	//	log.Fatalln("failed to load config", err)
-	//}
-
-	c := config.Config{
-		Port:          ":3000",
-		AuthSvcUrl:    "localhost:50051",
-		ProductSvcUrl: "localhost:50052",
-		OrderSvcUrl:   "localhost:50053",
+	c, err := config.LoadConfig()
+	if err != nil {
+		log.Fatalln("failed to load config", err)
 	}
+
 	r := gin.Default()
 
 	authSvc := *auth.RegisterRoutes(r, &c)
